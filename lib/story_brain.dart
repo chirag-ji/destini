@@ -1,6 +1,8 @@
 import 'package:destini/story.dart';
 
 class StoryBrain {
+  int _currentStory = -1;
+
   List<Story> _data = [
     Story(
       storyDesc:
@@ -38,4 +40,45 @@ class StoryBrain {
       choice2: '',
     )
   ];
+
+  bool isLastStory() {
+    return _currentStory >= _data.length - 1;
+  }
+
+  int getCurrentStoryIdx() {
+    return _currentStory;
+  }
+
+  Story getNextStory() {
+    if (!isLastStory()) _currentStory++;
+    return _data[_currentStory];
+  }
+
+  void resetStoryBoard() {
+    _currentStory = 0;
+  }
+
+  String getStoryDescription(int storyIndex) {
+    return _data[storyIndex].storyDesc;
+  }
+
+  String getChoice1Text(int storyIndex) {
+    return _data[storyIndex].choice1;
+  }
+
+  String getChoice2Text(int storyIndex) {
+    return _data[storyIndex].choice2;
+  }
+
+  String getCurrentStoryDescription() {
+    return getStoryDescription(_currentStory);
+  }
+
+  String getCurrentStoryChoice1() {
+    return getChoice1Text(_currentStory);
+  }
+
+  String getCurrentStoryChoice2() {
+    return getChoice2Text(_currentStory);
+  }
 }

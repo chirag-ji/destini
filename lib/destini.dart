@@ -1,3 +1,5 @@
+import 'package:destini/story.dart';
+import 'package:destini/story_brain.dart';
 import 'package:flutter/material.dart';
 
 String appName = 'Destini';
@@ -26,6 +28,24 @@ class StoryPage extends StatefulWidget {
 }
 
 class _StoryPageState extends State<StoryPage> {
+  Story? story;
+  StoryBrain brain = StoryBrain();
+
+  @override
+  void initState() {
+    retrieveStory();
+  }
+
+  void retrieveStory() {
+    setState(() {
+      story = brain.getNextStory();
+    });
+  }
+
+  void onChoiceMade(int choice) {
+    this.retrieveStory();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextStyle buttonTextStyle = TextStyle(color: Colors.white, fontSize: 20.0);
@@ -38,7 +58,7 @@ class _StoryPageState extends State<StoryPage> {
             flex: 12,
             child: Center(
               child: Text(
-                'Story Text Here',
+                brain.getCurrentStoryDescription(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 25.0,
@@ -52,9 +72,9 @@ class _StoryPageState extends State<StoryPage> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.red),
               ),
-              onPressed: () {},
+              onPressed: () => onChoiceMade(1),
               child: Text(
-                'Choice 1',
+                brain.getCurrentStoryChoice1(),
                 style: buttonTextStyle,
               ),
             ),
@@ -66,9 +86,9 @@ class _StoryPageState extends State<StoryPage> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
               ),
-              onPressed: () {},
+              onPressed: () => onChoiceMade(2),
               child: Text(
-                'Choice 2',
+                brain.getCurrentStoryChoice2(),
                 style: buttonTextStyle,
               ),
             ),
