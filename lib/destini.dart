@@ -1,4 +1,3 @@
-import 'package:destini/story.dart';
 import 'package:destini/story_brain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,46 +34,56 @@ class StoryPage extends StatefulWidget {
 }
 
 class _StoryPageState extends State<StoryPage> {
-  Story? story;
+  int storyIdx = -1;
   StoryBrain brain = StoryBrain();
 
   @override
   void initState() {
-    retrieveStory();
+    retrieveStory(0);
   }
 
   void reset() {
     brain.resetStoryBoard();
-    retrieveStory();
+    retrieveStory(0);
   }
 
-  void retrieveStory() {
+  void retrieveStory(int choice) {
     if (brain.isLastStory()) {
-      showDialog(
-          context: context,
-          builder: (ctx) {
-            return CupertinoAlertDialog(
-              title: Text('Quiz Stories Finished'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    reset();
-                    Navigator.pop(context);
-                  },
-                  child: Text('Restart', style: TextStyle(color: Colors.red)),
-                )
-              ],
-            );
-          });
+      _finishAlert();
     } else {
-      setState(() {
-        story = brain.getNextStory();
-      });
+      int idx = brain.getNextStoryIndex(choice);
+      if (idx == -1) {
+        _finishAlert();
+      } else {
+        setState(() {
+          storyIdx = idx;
+        });
+      }
     }
   }
 
+  void _finishAlert() {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return CupertinoAlertDialog(
+          title: Text('Quiz Stories Finished'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                reset();
+                Navigator.pop(context);
+              },
+              child: Text('Restart', style: TextStyle(color: Colors.red)),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   void onChoiceMade(int choice) {
-    this.retrieveStory();
+    this.retrieveStory(choice);
   }
 
   @override

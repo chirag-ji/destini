@@ -49,13 +49,31 @@ class StoryBrain {
     return _currentStory;
   }
 
-  Story getNextStory() {
-    if (!isLastStory()) _currentStory++;
-    return _data[_currentStory];
+  int getNextStoryIndex(int choice) {
+    if (isLastStory()) return -1;
+    if (choice == 0) {
+      _currentStory++;
+    } else {
+      bool choice1 = choice == 1;
+      switch (_currentStory) {
+        case 0:
+          _currentStory = choice1 ? 2 : 1;
+          break;
+        case 1:
+          _currentStory = choice1 ? 2 : 3;
+          break;
+        case 2:
+          _currentStory = choice1 ? 5 : 4;
+          break;
+        default:
+          _currentStory = -1;
+      }
+    }
+    return _currentStory;
   }
 
   void resetStoryBoard() {
-    _currentStory = 0;
+    _currentStory = -1;
   }
 
   String getStoryDescription(int storyIndex) {
