@@ -1,5 +1,6 @@
 import 'package:destini/story.dart';
 import 'package:destini/story_brain.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 String appName = 'Destini';
@@ -42,13 +43,34 @@ class _StoryPageState extends State<StoryPage> {
     retrieveStory();
   }
 
+  void reset() {
+    brain.resetStoryBoard();
+    retrieveStory();
+  }
+
   void retrieveStory() {
-    // if(brain.isLastStory()){
-    //   Alert
-    // }
-    setState(() {
-      story = brain.getNextStory();
-    });
+    if (brain.isLastStory()) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return CupertinoAlertDialog(
+              title: Text('Quiz Stories Finished'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    reset();
+                    Navigator.pop(context);
+                  },
+                  child: Text('Restart', style: TextStyle(color: Colors.red)),
+                )
+              ],
+            );
+          });
+    } else {
+      setState(() {
+        story = brain.getNextStory();
+      });
+    }
   }
 
   void onChoiceMade(int choice) {
