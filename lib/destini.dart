@@ -120,16 +120,19 @@ class _StoryPageState extends State<StoryPage> {
             ),
           ),
           SizedBox(height: 20.0),
-          Expanded(
-            flex: 2,
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue),
-              ),
-              onPressed: () => onChoiceMade(2),
-              child: Text(
-                brain.getCurrentStoryChoice2(),
-                style: buttonTextStyle,
+          Visibility(
+            visible: brain.getCurrentStoryChoice2().isNotEmpty,
+            child: Expanded(
+              flex: 2,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                onPressed: () => onChoiceMade(2),
+                child: Text(
+                  brain.getCurrentStoryChoice2(),
+                  style: buttonTextStyle,
+                ),
               ),
             ),
           )
