@@ -28,6 +28,53 @@ class StoryPage extends StatefulWidget {
 class _StoryPageState extends State<StoryPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    TextStyle buttonTextStyle = TextStyle(color: Colors.white, fontSize: 20.0);
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 12,
+            child: Center(
+              child: Text(
+                'Story Text Here',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Choice 1',
+                style: buttonTextStyle,
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Expanded(
+            flex: 2,
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Choice 2',
+                style: buttonTextStyle,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
