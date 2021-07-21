@@ -15,6 +15,12 @@ void main() {
         child: SafeArea(
           child: StoryPage(),
         ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/background.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     ),
   ));
@@ -37,6 +43,9 @@ class _StoryPageState extends State<StoryPage> {
   }
 
   void retrieveStory() {
+    // if(brain.isLastStory()){
+    //   Alert
+    // }
     setState(() {
       story = brain.getNextStory();
     });
